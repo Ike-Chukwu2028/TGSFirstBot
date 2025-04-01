@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <h2>Solve the Puzzle</h2>
+    <input type="number" id="answer" placeholder="Enter your answer">
+    <button onclick="submitAnswer()">Submit</button>
+
+    <script>
+        function submitAnswer() {
+            let answer = document.getElementById("answer").value;
+            let tg = window.Telegram.WebApp;
+            tg.sendData(`answer_${answer}`);
+            tg.close();  // Close the Web App after submission
+        }
+    </script>
+</body>
+</html>
