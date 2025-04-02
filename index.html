@@ -12,11 +12,33 @@
     <button onclick="submitAnswer()">Submit</button>
 
     <script>
+        // Initialize Telegram Web App
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Expand Web App inside Telegram
+
+        // Show the verification pop-up when the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            tg.showPopup({
+                title: "Verification Required",
+                message: "Solve the puzzle to verify.",
+                buttons: [{ id: "ok", text: "OK" }]
+            });
+        });
+
         function submitAnswer() {
             let answer = document.getElementById("answer").value;
-            let tg = window.Telegram.WebApp;
-            tg.sendData(`answer_${answer}`);
-            tg.close();  // Close the Web App after submission
+            
+            if (answer.trim() === "") {
+                tg.showPopup({
+                    title: "Error",
+                    message: "Please enter an answer before submitting.",
+                    buttons: [{ id: "close", text: "OK" }]
+                });
+                return;
+            }
+
+            tg.sendData(`answer_${answer}`); // Send answer back to bot
+            tg.close();  // Close Web App after submission
         }
     </script>
 </body>
